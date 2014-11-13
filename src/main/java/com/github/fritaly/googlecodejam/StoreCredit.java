@@ -5,7 +5,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class StoreCredit {
@@ -24,6 +26,29 @@ public class StoreCredit {
 		System.out.println();
 
 		solve("StoreCredit-large-practice.in");
+	}
+
+	private static final class IndexedPrice {
+		private final int price, index;
+
+		IndexedPrice(int price, int index) {
+			this.price = price;
+			this.index = index;
+		}
+	}
+
+	private static IndexedPrice removePrice(Collection<IndexedPrice> prices, int price) {
+		for (Iterator<IndexedPrice> iter = prices.iterator(); iter.hasNext();) {
+			final IndexedPrice indexedPrice =  iter.next();
+
+			if (indexedPrice.price == price) {
+				iter.remove();
+
+				return indexedPrice;
+			}
+		}
+
+		return null;
 	}
 
 	static void solve(final String resourceName) throws IOException {
@@ -50,6 +75,13 @@ public class StoreCredit {
 
 				for (String string : lineReader.readLine().split(" ")) {
 					itemPrices.add(Integer.parseInt(string));
+				}
+
+				// Store the indices for each price (the price can be non-unique !)
+				final List<IndexedPrice> indexedPrices = new ArrayList<>();
+
+				for (int i = 0; i < itemPrices.size(); i++) {
+					indexedPrices.add(new IndexedPrice(itemPrices.get(i), i));
 				}
 
 				log("C: " + amount);
@@ -88,12 +120,20 @@ public class StoreCredit {
 						final int total = itemPriceA + itemPriceB;
 
 						if (total == amount) {
-							// Return the (1-based) indices for the unordered input list
-							final int indexA = itemPrices.indexOf(itemPriceA) + 1;
-							final int indexB = itemPrices.indexOf(itemPriceB) + 1;
+							// Determine the index of the item prices in the initial unordered list
+							// Ensure not to return the same index twice (prices aren't
+							// necessarily unique)
+							final int indexA = removePrice(indexedPrices, itemPriceA).index;
+							final int indexB = removePrice(indexedPrices, itemPriceB).index;
 
+							// Double check the result is ok
+							if (itemPrices.get(indexA) + itemPrices.get(indexB) != amount) {
+								throw new RuntimeException("Try again !");
+							}
+
+							// Return (1-based) indices
 							// The lower index should come first
-							solution = String.format("%s %s", Math.min(indexA, indexB), Math.max(indexA, indexB));
+							solution = String.format("%s %s", Math.min(indexA, indexB) + 1, Math.max(indexA, indexB) + 1);
 							break;
 						}
 						if (total > amount) {
