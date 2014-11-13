@@ -12,6 +12,10 @@ import java.util.List;
 public class ReverseWords {
 
 	public static void main(String[] args) throws Exception {
+		solve("ReverseWords-sample.in");
+
+		System.out.println();
+
 		solve("ReverseWords-small-practice.in");
 
 		System.out.println();

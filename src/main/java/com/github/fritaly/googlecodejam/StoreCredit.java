@@ -21,6 +21,10 @@ public class StoreCredit {
 	}
 
 	public static void main(String[] args) throws Exception {
+		solve("StoreCredit-sample.in");
+
+		System.out.println();
+
 		solve("StoreCredit-small-practice.in");
 
 		System.out.println();
