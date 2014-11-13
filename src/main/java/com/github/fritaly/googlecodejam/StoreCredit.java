@@ -10,8 +10,19 @@ import java.util.List;
 
 public class StoreCredit {
 
+	private static final boolean LOG = false;
+
+	private static void log(String message) {
+		if (LOG) {
+			System.out.println(message);
+		}
+	}
+
 	public static void main(String[] args) throws Exception {
 		solve("StoreCredit-small-practice.in");
+
+		System.out.println();
+
 		solve("StoreCredit-large-practice.in");
 	}
 
@@ -25,7 +36,7 @@ public class StoreCredit {
 
 			final int useCases = Integer.parseInt(lineReader.readLine());
 
-			System.out.println(String.format("Found %d use cases", useCases));
+			log(String.format("Found %d use cases", useCases));
 
 			for (int k = 0; k < useCases; k++) {
 				// C: the amount of credit you have at the store
@@ -41,16 +52,16 @@ public class StoreCredit {
 					itemPrices.add(Integer.parseInt(string));
 				}
 
-				System.out.println("C: " + amount);
-				System.out.println("I: " + itemCount);
-				System.out.println("P: " + itemPrices);
+				log("C: " + amount);
+				log("I: " + itemCount);
+				log("P: " + itemPrices);
 
 				// Order the prices
 				final List<Integer> orderedPrices = new ArrayList<>(itemPrices);
 
 				Collections.sort(orderedPrices);
 
-				System.out.println("P (ordered): " + orderedPrices);
+				log("P (ordered): " + orderedPrices);
 
 				int tries = 0;
 				String solution = null;
@@ -82,7 +93,7 @@ public class StoreCredit {
 							final int indexB = itemPrices.indexOf(itemPriceB) + 1;
 
 							// The lower index should come first
-							solution = String.format("(%s, %s)", Math.min(indexA, indexB), Math.max(indexA, indexB));
+							solution = String.format("%s %s", Math.min(indexA, indexB), Math.max(indexA, indexB));
 							break;
 						}
 						if (total > amount) {
@@ -92,9 +103,9 @@ public class StoreCredit {
 					}
 				}
 
-				System.out.println("Solution " + solution + " found in " + tries + " tries");
+				log("Solution " + solution + " found in " + tries + " tries");
 
-				System.out.println();
+				System.out.println(String.format("Case #%d: %s", k + 1, solution));
 			}
 		} finally {
 			if (lineReader != null) {
