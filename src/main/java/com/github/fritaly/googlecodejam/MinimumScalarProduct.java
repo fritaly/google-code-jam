@@ -1,13 +1,10 @@
 package com.github.fritaly.googlecodejam;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.util.Arrays;
 import java.util.List;
 
-public class MinimumScalarProduct {
+public class MinimumScalarProduct extends AbstractPuzzler {
 
 	// clones the given array of ints
 	static int[] clone(int[] array) {
@@ -69,6 +66,17 @@ public class MinimumScalarProduct {
 		return result;
 	}
 
+	@Override
+	protected String solve(LineNumberReader reader) throws Exception {
+		// We don't need this
+		reader.readLine();
+
+		final Vector v1 = new Vector(reader.readLine());
+		final Vector v2 = new Vector(reader.readLine());
+
+		return Integer.toString(v1.getSorted().scalarProduct(v2.getReverseSorted()));
+	}
+
 	public static void main(String[] args) throws Exception {
 //		int[] a = new int[] { 1, 2, 3, 4 };
 //		int[] f = new int[] { 3, 9, 1, 7, 2, 5 };
@@ -78,15 +86,7 @@ public class MinimumScalarProduct {
 //		System.out.println(format(sort(f)));
 //		System.out.println(format(reverse(sort(f))));
 
-		solve("MinimumScalarProduct-sample.in");
-
-		System.out.println();
-
-		solve("MinimumScalarProduct-small-practice.in");
-
-		System.out.println();
-
-		solve("MinimumScalarProduct-large-practice.in");
+		new MinimumScalarProduct().run();
 	}
 
 	private static final class Vector {
@@ -154,37 +154,6 @@ public class MinimumScalarProduct {
 
 		Vector getReverseSorted() {
 			return new Vector(reverse(sort(this.values)));
-		}
-	}
-
-	static void solve(final String resourceName) throws IOException {
-		InputStream inputStream = MinimumScalarProduct.class.getResourceAsStream(resourceName);
-		InputStreamReader inputStreamReader = null;
-		LineNumberReader lineReader = null;
-
-		try {
-			lineReader = new LineNumberReader(inputStreamReader = new InputStreamReader(inputStream));
-
-			final int useCases = Integer.parseInt(lineReader.readLine());
-
-			for (int k = 0; k < useCases; k++) {
-				// We don't need this
-				lineReader.readLine();
-
-				final Vector v1 = new Vector(lineReader.readLine());
-				final Vector v2 = new Vector(lineReader.readLine());
-
-				final int scalarProduct = v1.getSorted().scalarProduct(v2.getReverseSorted());
-
-				System.out.println(String.format("Case #%d: %d", k + 1, scalarProduct));
-			}
-		} finally {
-			if (lineReader != null) {
-				lineReader.close();
-			}
-			if (inputStreamReader != null) {
-				inputStreamReader.close();
-			}
 		}
 	}
 }
