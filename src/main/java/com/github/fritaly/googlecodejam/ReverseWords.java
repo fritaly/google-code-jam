@@ -57,7 +57,7 @@ public class ReverseWords {
 				// Reuse existing logic from JDK
 				Collections.reverse(words);
 
-				System.out.println(String.format("Case #%d: %s", k, join(words)));
+				System.out.println(String.format("Case #%d: %s", k + 1, join(words)));
 			}
 		} finally {
 			if (lineReader != null) {
