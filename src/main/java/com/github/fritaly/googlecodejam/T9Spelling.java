@@ -1,22 +1,11 @@
 package com.github.fritaly.googlecodejam;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 
-public class T9Spelling {
+public class T9Spelling extends AbstractPuzzler {
 
 	public static void main(String[] args) throws Exception {
-		solve("T9Spelling-sample.in");
-
-		System.out.println();
-
-		solve("T9Spelling-small-practice.in");
-
-		System.out.println();
-
-		solve("T9Spelling-large-practice.in");
+		new T9Spelling().run();
 	}
 
 	public static String char2T9(char c) {
@@ -70,26 +59,8 @@ public class T9Spelling {
 		return buffer.toString();
 	}
 
-	static void solve(final String resourceName) throws IOException {
-		InputStream inputStream = T9Spelling.class.getResourceAsStream(resourceName);
-		InputStreamReader inputStreamReader = null;
-		LineNumberReader lineReader = null;
-
-		try {
-			lineReader = new LineNumberReader(inputStreamReader = new InputStreamReader(inputStream));
-
-			final int useCases = Integer.parseInt(lineReader.readLine());
-
-			for (int k = 0; k < useCases; k++) {
-				System.out.println(String.format("Case #%d: %s", k + 1, transpose(lineReader.readLine())));
-			}
-		} finally {
-			if (lineReader != null) {
-				lineReader.close();
-			}
-			if (inputStreamReader != null) {
-				inputStreamReader.close();
-			}
-		}
+	@Override
+	protected String solve(LineNumberReader reader) throws Exception {
+		return transpose(reader.readLine());
 	}
 }
