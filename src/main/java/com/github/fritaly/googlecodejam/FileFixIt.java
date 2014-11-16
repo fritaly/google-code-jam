@@ -6,12 +6,25 @@ import java.util.TreeSet;
 
 public class FileFixIt extends AbstractPuzzler {
 
-	private static final class Directory implements Comparable<Directory> {
+	@Override
+	protected boolean isLogEnabled() {
+		return false;
+	}
+
+	private final class Directory implements Comparable<Directory> {
 		final String name;
+
+		final Directory parent;
 
 		final Set<Directory> children = new TreeSet<>();
 
-		public Directory(String name) {
+		public Directory() {
+			this.parent = null;
+			this.name = "";
+		}
+
+		public Directory(Directory parent, String name) {
+			this.parent = parent;
 			this.name = name;
 		}
 
@@ -29,10 +42,31 @@ public class FileFixIt extends AbstractPuzzler {
 			return null;
 		}
 
+		String getPath() {
+			if (parent == null) {
+				return "/";
+			}
+
+			final StringBuilder buffer = new StringBuilder();
+			buffer.append(parent.getPath());
+
+			if (buffer.charAt(buffer.length() - 1) != '/') {
+				buffer.append("/");
+			}
+
+			return buffer.append(name).toString();
+		}
+
 		Directory addChild(String name) {
-			final Directory dir = new Directory(name);
+			if ("".equals(name)) {
+				throw new IllegalArgumentException("Can't create a directory with a blank name");
+			}
+
+			final Directory dir = new Directory(this, name);
 
 			this.children.add(dir);
+
+			log("Created directory " + dir.getPath());
 
 			return dir;
 		}
@@ -54,7 +88,9 @@ public class FileFixIt extends AbstractPuzzler {
 		final int numberOfDirsToCreate = Integer.parseInt(line1.split(" ")[1]);
 
 		// Create an in-memory tree representing the existing directories
-		final Directory rootDir = new Directory("");
+		final Directory rootDir = new Directory();
+
+		log("Creating existing directories");
 
 		for (int i = 0; i < numberOfExistingDirs; i++) {
 			final String path = reader.readLine();
@@ -63,14 +99,22 @@ public class FileFixIt extends AbstractPuzzler {
 			Directory currentDir = rootDir;
 
 			for (int j = 0; j < chunks.length; j++) {
-				if (chunks[j].equals("")) {
+				final String directoryName = chunks[j];
+
+				if (directoryName.equals("")) {
 					// That's the root directory which always exists
 					continue;
 				}
 
-				currentDir = currentDir.addChild(chunks[j]);
+				if (!currentDir.hasChild(directoryName)) {
+					currentDir = currentDir.addChild(directoryName);
+				} else {
+					currentDir = currentDir.getChild(directoryName);
+				}
 			}
 		}
+
+		log("Creating missing directories");
 
 		int count = 0;
 
