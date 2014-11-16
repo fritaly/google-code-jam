@@ -11,6 +11,17 @@ public abstract class AbstractPuzzler {
 	public AbstractPuzzler() {
 	}
 
+	protected boolean isLogEnabled() {
+		// Log disabled by default, override if necessary
+		return false;
+	}
+
+	protected final void log(String message) {
+		if (isLogEnabled()) {
+			System.out.println(message);
+		}
+	}
+
 	public String getName() {
 		return this.getClass().getSimpleName();
 	}

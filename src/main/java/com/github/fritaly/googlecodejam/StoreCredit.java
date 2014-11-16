@@ -9,14 +9,6 @@ import java.util.List;
 
 public class StoreCredit extends AbstractPuzzler {
 
-	private static final boolean LOG = false;
-
-	private static void log(String message) {
-		if (LOG) {
-			System.out.println(message);
-		}
-	}
-
 	public static void main(String[] args) throws Exception {
 		new StoreCredit().run();
 	}
