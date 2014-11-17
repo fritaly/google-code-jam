@@ -34,7 +34,7 @@ public abstract class AbstractPuzzler {
 
 	public final void run() throws Exception {
 		for (String resource : getInputs()) {
-			InputStream inputStream = ReverseWords.class.getResourceAsStream(resource);
+			InputStream inputStream = getClass().getResourceAsStream(resource);
 			InputStreamReader inputStreamReader = null;
 			LineNumberReader lineReader = null;
 
