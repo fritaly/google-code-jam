@@ -23,6 +23,12 @@ public abstract class AbstractPuzzler {
 		}
 	}
 
+	protected final void log(Object object) {
+		if (isLogEnabled()) {
+			System.out.println(object.toString());
+		}
+	}
+
 	public String getName() {
 		return this.getClass().getSimpleName();
 	}
