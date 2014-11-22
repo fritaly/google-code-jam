@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public abstract class AbstractPuzzler {
 
@@ -58,6 +59,42 @@ public abstract class AbstractPuzzler {
 
 			System.out.println();
 		}
+	}
+
+	public final void execute() throws Exception {
+		for (String resource : getInputs()) {
+			InputStream inputStream = getClass().getResourceAsStream(resource);
+			Scanner scanner = null;
+
+			try {
+				handleInput(scanner = new Scanner(inputStream));
+			} finally {
+				if (scanner != null) {
+					scanner.close();
+				}
+				if (inputStream != null) {
+					inputStream.close();
+				}
+			}
+
+			System.out.println();
+		}
+	}
+
+	protected void handleInput(Scanner scanner) throws IOException, Exception {
+		// This implementation works most of the time, let subclasses override it if needed
+		final int useCases = scanner.nextInt();
+
+//		log(String.format("Found %d use cases", useCases));
+
+		for (int k = 0; k < useCases; k++) {
+			System.out.println(String.format("Case #%d: %s", k + 1, solve(scanner)));
+		}
+	}
+
+	protected String solve(Scanner scanner) throws Exception {
+		// Method to be overridden by subclasses to solve use cases
+		throw new UnsupportedOperationException("Method not implemented");
 	}
 
 	protected void handleInput(LineNumberReader reader) throws IOException, Exception {
