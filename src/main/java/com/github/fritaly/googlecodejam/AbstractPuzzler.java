@@ -67,6 +67,10 @@ public abstract class AbstractPuzzler {
 			Scanner scanner = null;
 
 			try {
+				if (inputStream == null) {
+					throw new RuntimeException("Unable to find resource '" + resource + "'");
+				}
+
 				handleInput(scanner = new Scanner(inputStream));
 			} finally {
 				if (scanner != null) {
