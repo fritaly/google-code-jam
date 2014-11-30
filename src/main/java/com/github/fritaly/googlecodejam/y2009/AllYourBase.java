@@ -3,7 +3,9 @@ package com.github.fritaly.googlecodejam.y2009;
 import java.io.LineNumberReader;
 
 import com.github.fritaly.googlecodejam.AbstractPuzzler;
+import com.github.fritaly.googlecodejam.Incomplete;
 
+@Incomplete
 public class AllYourBase extends AbstractPuzzler {
 
 	public static void main(String[] args) throws Exception {

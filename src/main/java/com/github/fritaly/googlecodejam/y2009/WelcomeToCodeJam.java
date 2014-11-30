@@ -5,7 +5,9 @@ import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.github.fritaly.googlecodejam.AbstractPuzzler;
+import com.github.fritaly.googlecodejam.Incomplete;
 
+@Incomplete
 public class WelcomeToCodeJam extends AbstractPuzzler {
 
 	public static void main(String[] args) throws Exception {
