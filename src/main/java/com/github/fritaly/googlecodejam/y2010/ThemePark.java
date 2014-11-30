@@ -7,7 +7,9 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import com.github.fritaly.googlecodejam.AbstractPuzzler;
+import com.github.fritaly.googlecodejam.Incomplete;
 
+@Incomplete
 public class ThemePark extends AbstractPuzzler {
 
 	public static void main(String[] args) throws Exception {

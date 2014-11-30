@@ -3,7 +3,9 @@ package com.github.fritaly.googlecodejam.y2010;
 import java.util.Scanner;
 
 import com.github.fritaly.googlecodejam.AbstractPuzzler;
+import com.github.fritaly.googlecodejam.Incomplete;
 
+@Incomplete
 public class Bacteria extends AbstractPuzzler {
 
 	private static class Cell {
