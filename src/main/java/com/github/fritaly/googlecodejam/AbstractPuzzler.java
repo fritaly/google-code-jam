@@ -116,4 +116,14 @@ public abstract class AbstractPuzzler {
 		// Method to be overridden by subclasses to solve use cases
 		throw new UnsupportedOperationException("Method not implemented");
 	}
+
+	protected static String repeat(String string, int times) {
+		final StringBuilder buffer = new StringBuilder();
+
+		for (int i = 0; i < times; i++) {
+			buffer.append(string);
+		}
+
+		return buffer.toString();
+	}
 }
