@@ -37,20 +37,12 @@ public class RPI extends AbstractPuzzler {
 			this.data = data;
 		}
 
-		int getWonGames() {
-			return getWonGames(-1);
-		}
-
 		int getWonGames(int skippedIteam) {
 			return countMatches(data, '1', skippedIteam);
 		}
 
 		int getLostGames(int skippedIteam) {
 			return countMatches(data, '0', skippedIteam);
-		}
-
-		int getPlayedGames() {
-			return getPlayedGames(-1);
 		}
 
 		int getPlayedGames(int skippedIteam) {
