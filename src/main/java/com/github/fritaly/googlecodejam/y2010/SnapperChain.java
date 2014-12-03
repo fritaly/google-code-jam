@@ -53,14 +53,6 @@ public class SnapperChain extends AbstractPuzzler {
 
 		final int n = numberOfSnaps % (1 << numberOfSnappers);
 
-		String string = Integer.toBinaryString(n);
-
-		if (string.length() < numberOfSnappers) {
-			string = string + repeat("0", numberOfSnappers - string.length());
-		}
-
-		log(string);
-
-		return repeat("1", numberOfSnappers).equals(string) ? "ON" : "OFF";
+		return (n == (1 << numberOfSnappers) - 1) ? "ON" : "OFF";
 	}
 }
