@@ -2,6 +2,7 @@ package com.github.fritaly.googlecodejam.y2009;
 
 import java.io.IOException;
 import java.io.LineNumberReader;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +11,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.github.fritaly.googlecodejam.AbstractPuzzler;
-import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.ParseException;
 
 public class AlienLanguage extends AbstractPuzzler {
 
@@ -93,7 +93,7 @@ public class AlienLanguage extends AbstractPuzzler {
 				matchers.addAll(parse(matcher2.group(2)));
 			}
 		} else {
-			throw new ParseException("Error when parsing pattern '" + pattern + "'");
+			throw new ParseException("Error when parsing pattern '" + pattern + "'", -1);
 		}
 
 		return matchers;
