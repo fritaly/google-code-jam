@@ -10,14 +10,15 @@ import com.github.fritaly.googlecodejam.AbstractPuzzler;
 
 public class BabyHeight extends AbstractPuzzler {
 
-	private static final Height FIVE_INCHES = new Height("0'5\"");
+	private static final Height FIVE_INCHES = new Height(5);
 
-	private static final Height FOUR_INCHES = new Height("0'4\"");
+	private static final Height FOUR_INCHES = new Height(4);
 
 	private static class Height {
-		int feet, inches;
+		int inches;
 
-		public Height() {
+		public Height(int inches) {
+			this.inches = inches;
 		}
 
 		public Height(String text) {
@@ -27,59 +28,34 @@ public class BabyHeight extends AbstractPuzzler {
 				throw new IllegalArgumentException();
 			}
 
-			this.feet = Integer.parseInt(matcher.group(1));
-			this.inches = Integer.parseInt(matcher.group(2));
+			this.inches = Integer.parseInt(matcher.group(1)) * 12 + Integer.parseInt(matcher.group(2));
 		}
 
 		Height plus(Height other) {
-			final Height result = new Height();
-			result.feet = this.feet + other.feet;
-			result.inches = this.inches + other.inches;
-
-			if (result.inches >= 12) {
-				result.inches -= 12;
-				result.feet++;
-			}
-
-			return result;
+			return new Height(this.inches + other.inches);
 		}
 
 		Height minus(Height other) {
-			final Height result = new Height();
-			result.feet = this.feet - other.feet;
-			result.inches = this.inches - other.inches;
-
-			if (result.inches < 0) {
-				result.inches += 12;
-				result.feet--;
-			}
-
-			return result;
+			return new Height(this.inches - other.inches);
 		}
 
 		Height half(boolean lower) {
-			int totalInches = (this.feet * 12 + this.inches);
-
-			if (totalInches % 2 == 1) {
+			if (inches % 2 == 1) {
 				if (lower) {
 					// Round up to shrink the range
-					totalInches++;
+					return new Height((inches + 1) / 2);
 				} else {
 					// Round down to shrink the range
-					totalInches--;
+					return new Height((inches - 1) / 2);
 				}
 			}
 
-			final Height result = new Height();
-			result.feet = (totalInches / 2) / 12;
-			result.inches = (totalInches / 2) % 12;
-
-			return result;
+			return new Height(inches / 2);
 		}
 
 		@Override
 		public String toString() {
-			return String.format("%d'%d\"", feet, inches);
+			return String.format("%d'%d\"", (inches / 12), (inches % 12));
 		}
 	}
 
@@ -107,9 +83,9 @@ public class BabyHeight extends AbstractPuzzler {
 		final Height result;
 
 		if (girl) {
-			result = new Height().plus(motherHeight).plus(fatherHeight).minus(FIVE_INCHES);
+			result = motherHeight.plus(fatherHeight).minus(FIVE_INCHES);
 		} else {
-			result = new Height().plus(motherHeight).plus(fatherHeight).plus(FIVE_INCHES);
+			result = motherHeight.plus(fatherHeight).plus(FIVE_INCHES);
 		}
 
 		final Height lowerBound = result.half(true).minus(FOUR_INCHES);
